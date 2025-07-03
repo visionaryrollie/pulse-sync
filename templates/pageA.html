@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Message Hub A</title>
+</head>
+<body style="background-color: black; color: white; text-align: center; padding-top: 10%;">
+    <h1>Message Hub A (Control Tower)</h1>
+
+    <form method="POST" action="/sync">
+        <input type="text" name="message" placeholder="Message to B" required>
+        <button type="submit">Send</button>
+    </form>
+
+    <h2>Last Message from B:</h2>
+    <div id="message" style="margin-top: 20px; font-size: 24px;">
+        {{ message }}
+    </div>
+
+    <br>
+    <a href="/stream" style="color: cyan;">➜ Go to Page B</a>
+
+    <script>
+        setInterval(() => {
+            fetch("/control")
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const newMessage = doc.querySelector('#message');
+                    if (newMessage) {
+                        document.querySelector('#message').innerHTML = newMessage.innerHTML;
+                    }
+                });
+        }, 3000);
+    </script>
+</body>
+</html>
+
+
+
+
+
+
