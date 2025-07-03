@@ -18,9 +18,9 @@ app.include_router(page_b.router)
 @app.get("/")
 async def redirect_based_on_domain(request: Request):
     host = request.headers.get("host", "")
-    if "pausea.live" in host:
+    if "pulsea.live" in host:
         return RedirectResponse(url="/control")  # Corrected: Page A
-    elif "pauseb.live" in host:
+    elif "pulseb.live" in host:
         return RedirectResponse(url="/stream")   # Correct: Page B
     return PlainTextResponse("Unknown domain", status_code=400)
 
